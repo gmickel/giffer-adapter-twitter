@@ -29,14 +29,12 @@ Adapter.prototype.start = function() {
       if (data.entities.media) {
         // handle images uploaded through twitter's image service
         data.entities.media.forEach(function(tweet) {
-          console.log(tweet.media_url);
           self.emit('gif', tweet.media_url);
         });
       }
       if (data.entities.urls) {
         data.entities.urls.forEach(function(tweet) {
-          if (tweet.expanded_url.match(/(https?:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
-            console.log(tweet.expanded_url);
+          if (tweet.expanded_url.match(/(http:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
             self.emit('gif', tweet.expanded_url);
           }
         });
