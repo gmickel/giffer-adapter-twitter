@@ -1,10 +1,11 @@
 {
   "name": "giffer-adapter-twitter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Giffer adapter for twitter",
   "main": "index.js",
   "scripts": {
-    "test": "tap tests/test-*.js"
+    "test": "npm run clear-test; tap tests/test-*.js",
+    "clear-test": "rm -rf tests/temp/*"
   },
   "author": "Gordon Mickel <gordon.mickel@gmail.com",
   "license": "ISC",
