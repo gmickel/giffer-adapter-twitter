@@ -1,0 +1,18 @@
+{
+  "name": "giffer-adapter-twitter",
+  "version": "0.0.1",
+  "description": "Giffer adapter for twitter",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap tests/test-*.js"
+  },
+  "author": "Gordon Mickel <gordon.mickel@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "inherits": "^2.0.1",
+    "ntwitter": "^0.5.0"
+  },
+  "devDependencies": {
+    "tap": "^0.4.11"
+  }
+}
