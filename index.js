@@ -20,7 +20,6 @@ function Adapter(config) {
 }
 
 Adapter.prototype.start = function() {
-  console.log(twitterConfig.consumer_key);
   this.emit('start');
   var self = this;
 
