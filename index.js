@@ -33,7 +33,7 @@ Adapter.prototype.start = function() {
       }
       if (data.entities.urls) {
         data.entities.urls.forEach(function(tweet) {
-          if (tweet.expanded_url.match(/(http:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
+          if (tweet.expanded_url.match(/(https?:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
             self.emit('gif', tweet.expanded_url);
           }
         });
