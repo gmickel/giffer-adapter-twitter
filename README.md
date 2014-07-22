@@ -10,6 +10,18 @@ enter your Twitter API creditials in the `config.js` file, see `config.js.exampl
 
 The following configuration options are available:
 
-### `track`
+### `path`
 
-Which keywords to track. See [Twitter Dev API](https://dev.twitter.com/docs/streaming-apis/parameters#track)
+Streaming endpoint to hit. One of:
+
+'statuses/filter'
+'statuses/sample'
+'statuses/firehose'
+'user'
+'site'
+
+ See [Twitter Dev API](https://dev.twitter.com/docs/api/1.1#334)
+
+### `params`
+
+parameters for the request
