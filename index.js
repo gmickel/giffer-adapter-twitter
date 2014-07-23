@@ -15,7 +15,7 @@ inherits(Adapter, EventEmitter);
 
 function Adapter(config) {
   this.path = config.path || 'statuses/filter';
-  this.query = config.params || {follow: [1019188722, 15076743, 19701628, 265902729]};
+  this.query = config.query || {follow: [1019188722, 15076743, 19701628, 265902729]};
   EventEmitter.call(this);
 }
 
@@ -23,7 +23,7 @@ Adapter.prototype.start = function() {
   this.emit('start');
   var self = this;
 
-  var stream = twit.stream(self.path, {follow: 15076743});
+  var stream = twit.stream(self.path, self.query);
   stream.on('tweet', function(data) {
     if (data.entities.media) {
       // handle images uploaded through twitter's image service
@@ -32,6 +32,7 @@ Adapter.prototype.start = function() {
       });
     }
     if (data.entities.urls) {
+      // handle all other images
       data.entities.urls.forEach(function(tweet) {
         if (tweet.expanded_url.match(/(https?:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
           self.emit('gif', tweet.expanded_url);

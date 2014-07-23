@@ -1,6 +1,6 @@
 {
   "name": "giffer-adapter-twitter",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Giffer adapter for twitter",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "inherits": "^2.0.1",
-    "tuiter": "^0.2.12",
     "twit": "^1.1.18"
   },
   "devDependencies": {
