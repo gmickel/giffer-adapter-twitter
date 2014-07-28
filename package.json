@@ -1,6 +1,6 @@
 {
   "name": "giffer-adapter-twitter",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Giffer adapter for twitter",
   "main": "index.js",
   "scripts": {
