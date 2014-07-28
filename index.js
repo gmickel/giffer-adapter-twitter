@@ -28,13 +28,18 @@ Adapter.prototype.start = function() {
     if (data.entities.media) {
       // handle images uploaded through twitter's image service
       data.entities.media.forEach(function(tweet) {
-        self.emit('gif', tweet.media_url);
+        console.log(tweet.media_url);
+        if (tweet.media_url.match(/(https?:\/\/.*\.gif)/i)) {
+          self.emit('gif', tweet.media_url);
+        }
       });
     }
     if (data.entities.urls) {
       // handle all other images
       data.entities.urls.forEach(function(tweet) {
-        if (tweet.expanded_url.match(/(https?:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
+        // if (tweet.expanded_url.match(/(https?:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
+        console.log(tweet.expanded_url);
+        if (tweet.expanded_url.match(/(https?:\/\/.*\.gif)/i)) {
           self.emit('gif', tweet.expanded_url);
         }
       });
