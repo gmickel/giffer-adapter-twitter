@@ -23,8 +23,8 @@ Adapter.prototype.start = function() {
   this.emit('start');
   var self = this;
 
-  var stream = twit.stream(self.path, self.query);
-  stream.on('tweet', function(data) {
+  this.stream = twit.stream(self.path, self.query);
+  this.stream.on('tweet', function(data) {
     if (data.entities.media) {
       // handle images uploaded through twitter's image service
       data.entities.media.forEach(function(tweet) {
@@ -40,20 +40,24 @@ Adapter.prototype.start = function() {
       });
     }
   });
-  stream.on('disconnect', function(disconnectMessage) {
+  this.stream.on('disconnect', function(disconnectMessage) {
     // Handle a disconnection
   });
-  stream.on('warning', function(warning) {
+  this.stream.on('limit', function(limitMessage) {
+    //...
+  });
+
+  this.stream.on('warning', function(warning) {
     console.log(warning);
   });
-  stream.on('error', function(error) {
+  this.stream.on('error', function(error) {
     console.log(error);
   });
 };
 
 Adapter.prototype.stop = function() {
   this.emit('stop');
-  twit.stream.stop();
+  this.stream.stop();
   // stop grabbing gifs
 };
 
