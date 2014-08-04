@@ -16,6 +16,8 @@ inherits(Adapter, EventEmitter);
 function Adapter(config) {
   this.path = config.path || 'statuses/filter';
   this.query = config.query || {follow: [1019188722, 15076743, 19701628, 265902729]};
+  this.image_types = config.image_types || '(gif|jpg|jpeg|png)';
+  this.re = new RegExp('https?:\/\/.*\\.' + this.image_types + '', 'i');
   EventEmitter.call(this);
 }
 
@@ -28,7 +30,7 @@ Adapter.prototype.start = function() {
     if (data.entities.media) {
       // handle images uploaded through twitter's image service
       data.entities.media.forEach(function(tweet) {
-        if (tweet.media_url.match(/(https?:\/\/.*\.gif)/i)) {
+        if (tweet.media_url.match(self.re)) {
           self.emit('gif', tweet.media_url);
         }
       });
@@ -37,7 +39,7 @@ Adapter.prototype.start = function() {
       // handle all other images
       data.entities.urls.forEach(function(tweet) {
         // if (tweet.expanded_url.match(/(https?:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
-        if (tweet.expanded_url.match(/(https?:\/\/.*\.gif)/i)) {
+        if (tweet.expanded_url.match(self.re)) {
           self.emit('gif', tweet.expanded_url);
         }
       });
