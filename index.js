@@ -1,8 +1,18 @@
 'use strict';
 var EventEmitter = require('events').EventEmitter;
 var inherits = require('inherits');
-var twitterConfig = require('./config');
 var twitter = require('twit');
+
+var fs = require('fs');
+var twitterConfig;
+fs.exists('./config', function(exists) {
+  if (exists) {
+    twitterConfig = require(path);
+  } else {
+    console.log('you need to create a config.js file');
+  }
+});
+
 
 inherits(Adapter, EventEmitter);
 
