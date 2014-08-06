@@ -3,16 +3,13 @@ var EventEmitter = require('events').EventEmitter;
 var inherits = require('inherits');
 var twitter = require('twit');
 
-var fs = require('fs');
-var twitterConfig;
-fs.exists('./config', function(exists) {
-  if (exists) {
-    twitterConfig = require(path);
-  } else {
+try {
+  var twitterConfig = require('./config');
+} catch (e) {
+  if (e.code !== 'MODULE_NOT_FOUND') {
     console.log('you need to create a config.js file');
   }
-});
-
+}
 
 inherits(Adapter, EventEmitter);
 
