@@ -13,9 +13,9 @@ test('Test functionality of adapter', function(t) {
 test('Test starting and stopping of adapter', function(t) {
   var instance = new Adapter({
     'path': 'statuses/filter',
+    //'path': 'statuses/sample',
     'query': {follow: [256099675, 1019188722]},
     'image_types': 'gif'
-    //'query': {track: ['#funny', '#hilarious', '#cats', '#cat']}
   });
   instance.start();
   instance.on('gif', function(url) {

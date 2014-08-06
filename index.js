@@ -3,21 +3,23 @@ var EventEmitter = require('events').EventEmitter;
 var inherits = require('inherits');
 var twitterConfig = require('./config');
 var twitter = require('twit');
-var twit = new twitter({
-  consumer_key: twitterConfig.twitter.consumer_key,
-  consumer_secret: twitterConfig.twitter.consumer_secret,
-  access_token: twitterConfig.twitter.access_token_key,
-  access_token_secret: twitterConfig.twitter.access_token_secret
-});
-
 
 inherits(Adapter, EventEmitter);
 
-function Adapter(config) {
-  this.path = config.path || 'statuses/filter';
-  this.query = config.query || {follow: [1019188722, 15076743, 19701628, 265902729]};
-  this.image_types = config.image_types || '(gif|jpg|jpeg|png)';
+function Adapter(args) {
+  this.config = args.config || twitterConfig.twitter;
+  this.path = args.path || 'statuses/filter';
+  this.query = args.query || {follow: [1019188722, 15076743, 19701628, 265902729]};
+  this.image_types = args.image_types || '(gif|jpg|jpeg|png)';
   this.re = new RegExp('https?:\/\/.*\\.' + this.image_types + '', 'i');
+
+  this.twit = new twitter({
+    consumer_key: this.config.consumer_key,
+    consumer_secret: this.config.consumer_secret,
+    access_token: this.config.access_token_key,
+    access_token_secret: this.config.access_token_secret
+  });
+
   EventEmitter.call(this);
 }
 
@@ -25,7 +27,7 @@ Adapter.prototype.start = function() {
   this.emit('start');
   var self = this;
 
-  this.stream = twit.stream(self.path, self.query);
+  this.stream = this.twit.stream(self.path, self.query);
   this.stream.on('tweet', function(data) {
     if (data.entities.media) {
       // handle images uploaded through twitter's image service
