@@ -40,7 +40,8 @@ Adapter.prototype.start = function() {
       // handle images uploaded through twitter's image service
       data.entities.media.forEach(function(tweet) {
         if (tweet.media_url.match(self.re)) {
-          self.emit('gif', tweet.media_url);
+          var source_url = 'http://www.twitter.com/' + data.user.screen_name + '/status/' + data.id;
+          self.emit('gif', tweet.media_url, { origin: source_url });
         }
       });
     }
@@ -49,7 +50,8 @@ Adapter.prototype.start = function() {
       data.entities.urls.forEach(function(tweet) {
         // if (tweet.expanded_url.match(/(https?:\/\/.*\.(?:png|jpg|gif|jpeg))/i)) {
         if (tweet.expanded_url.match(self.re)) {
-          self.emit('gif', tweet.expanded_url);
+          var source_url = 'http://www.twitter.com/' + data.user.screen_name + '/status/' + data.id;
+          self.emit('gif', tweet.expanded_url, { origin: source_url });
         }
       });
     }
