@@ -1,6 +1,6 @@
-# giffer-adapter-reddit
+# giffer-adapter-twitter
 
-Reddit adapter for giffer.
+Twitter adapter for giffer.
 
 ## authentication
 
