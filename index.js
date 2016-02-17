@@ -1,13 +1,15 @@
 'use strict';
+var process = require('process');
 var EventEmitter = require('events').EventEmitter;
 var inherits = require('inherits');
-var twitter = require('twit');
+//var twitter = require('twit');
+var twitterStream = require('twitter-stream-api');
 
 try {
   var twitterConfig = require('./config');
 } catch (e) {
-  if (e.code !== 'MODULE_NOT_FOUND') {
-    console.log('you need to create a config.js file');
+  if (e.code === 'MODULE_NOT_FOUND') {
+    throw new Error('Config file not found, API keys required to access the twitter API');
   }
 }
 
@@ -20,11 +22,11 @@ function Adapter(args) {
   this.image_types = args.image_types || '(gif|jpg|jpeg|png)';
   this.re = new RegExp('https?:\/\/.*\\.' + this.image_types + '', 'i');
 
-  this.twit = new twitter({
+  this.twit = new twitterStream({
     consumer_key: this.config.consumer_key,
     consumer_secret: this.config.consumer_secret,
-    access_token: this.config.access_token_key,
-    access_token_secret: this.config.access_token_secret
+    token: this.config.access_token_key,
+    token_secret: this.config.access_token_secret
   });
 
   EventEmitter.call(this);
@@ -34,8 +36,19 @@ Adapter.prototype.start = function() {
   this.emit('start');
   var self = this;
 
-  this.stream = this.twit.stream(self.path, self.query);
-  this.stream.on('tweet', function(data) {
+  //this.stream = this.twit.stream(self.path, self.query);
+  this.stream = this.twit.stream('statuses/sample', {
+    //track: 'javascript',
+    stall_warnings: true
+  });
+
+  this.twit.on('connection success', function (uri) {
+    console.log('connection success', uri);
+  });
+
+
+  this.twit.on('data', function(data) {
+    console.log('data', data);
     if (data.entities.media) {
       // handle images uploaded through twitter's image service
       data.entities.media.forEach(function(tweet) {
@@ -56,7 +69,7 @@ Adapter.prototype.start = function() {
       });
     }
   });
-  this.stream.on('disconnect', function(disconnectMessage) {
+  /*this.stream.on('disconnect', function(disconnectMessage) {
     // Handle a disconnection
   });
   this.stream.on('limit', function(limitMessage) {
@@ -68,7 +81,7 @@ Adapter.prototype.start = function() {
   });
   this.stream.on('error', function(error) {
     console.log(error);
-  });
+  });*/
 };
 
 Adapter.prototype.stop = function() {

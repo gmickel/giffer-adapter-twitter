@@ -12,15 +12,16 @@ test('Test functionality of adapter', function(t) {
 
 test('Test starting and stopping of adapter', function(t) {
   var instance = new Adapter({
-    'path': 'statuses/filter',
-    //'path': 'statuses/sample',
-    'query': {follow: [1019188722, 15076743, 19701628, 265902729]},
+    //'path': 'statuses/filter',
+    'path': 'statuses/sample',
+    //'query': {follow: [1019188722, 15076743, 19701628, 265902729]},
+    'query': {},
     'image_types': 'gif'
   });
   instance.start();
   instance.on('gif', function(url, metadata) {
     console.log('url', url);
-    console.log('origin', metadata.origin)
+    console.log('origin', metadata.origin);
     t.ok(url);
     t.ok(metadata);
     t.ok(metadata.origin);
