@@ -1,32 +1,43 @@
 'use strict';
-var test = require('tap').test;
-var Adapter = require('../index');
+const test = require('tap').test;
+const Adapter = require('../index');
+const request = require('request');
 
-test('Test functionality of adapter', function(t) {
-  var instance = new Adapter({});
-  t.ok(instance);
-
-  // test start and stop functions
-  t.end();
-});
-
-test('Test starting and stopping of adapter', function(t) {
-  var instance = new Adapter({
-    //'path': 'statuses/filter',
-    'path': 'statuses/sample',
-    //'query': {follow: [1019188722, 15076743, 19701628, 265902729]},
-    'query': {},
-    'image_types': 'gif'
+function testURL(url, callback) {
+  request(url, (error, response) => {
+    callback(null, response.statusCode);
   });
+}
+
+test('Test starting and stopping of adapter', (t) => {
+  const instance = new Adapter({
+    path: 'statuses/filter',
+    query: { track: ['javascript', 'gifs', 'funny', 'images', 'pics'], stall_warnings: true },
+    image_types: '(gif|jpg|jpeg|png)'
+  });
+  t.ok(instance, 'adapter initialized');
   instance.start();
-  instance.on('gif', function(url, metadata) {
-    console.log('url', url);
-    console.log('origin', metadata.origin);
-    t.ok(url);
-    t.ok(metadata);
-    t.ok(metadata.origin);
+  t.equal(instance.stopped, false, 'adapter should be running');
+  instance.on('gif', (url, metadata) => {
+    console.log('url', url); // eslint-disable-line no-console
+    console.log('origin', metadata.origin); // eslint-disable-line no-console
+    t.ok(url, 'url exists');
+    t.ok(metadata, 'metadata exists');
+    t.ok(metadata.origin, 'origin exists');
+    test('Test url', (urlTest) => {
+      testURL(url, (err, statusCode) => {
+        urlTest.equal(statusCode, 200, 'image url should return a 200 statuscode');
+        urlTest.end();
+      });
+    });
+    test('Test origin url', (originTest) => {
+      testURL(metadata.origin, (err, statusCode) => {
+        originTest.equal(statusCode, 200, 'origin url should return a 200 statuscode');
+        originTest.end();
+      });
+    });
     instance.stop();
+    t.equal(instance.stopped, true, 'adapter should be stopped');
     t.end();
   });
-  t.end();
 });
