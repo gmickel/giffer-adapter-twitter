@@ -4,9 +4,9 @@
   "description": "Giffer adapter for twitter",
   "main": "index.js",
   "scripts": {
-    "test": "npm run clear-test; tap tests/test-*.js",
-    "clear-test": "rm -rf tests/temp/*",
-    "lint": "eslint -c ./.eslintrc src test --ext .js && jscs src test",
+    "pretest": "rm -rf tests/temp/*",
+    "test": "tap tests/test-*.js",
+    "lint": "eslint -c ./.eslintrc . test --ext .js && jscs src test",
     "package:check": "./node_modules/.bin/ncu",
     "package:upgrade": "./node_modules/.bin/ncu -u"
   },
@@ -14,13 +14,14 @@
   "license": "ISC",
   "dependencies": {
     "inherits": "^2.0.1",
-    "twit": "^1.1.18",
     "twitter-stream-api": "^0.4.2"
   },
   "devDependencies": {
     "tap": "^0.4.11",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^5.0.0",
+    "eslint-plugin-react": "^3.16.1",
+    "jscs": "^2.9.0",
     "npm-check-updates": "^2.5.6"
   }
 }
