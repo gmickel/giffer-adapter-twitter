@@ -15,8 +15,9 @@
   "disallowKeywords": ["with"],
   "disallowSpacesInsideObjectBrackets": null,
   "disallowImplicitTypeConversion": ["string"],
+  "requireCamelCaseOrUpperCaseIdentifiers": null,
 
-  "safeContextKeyword": "that",
+  "safeContextKeyword": "self",
 
   "excludeFiles": [
     "dist/**",

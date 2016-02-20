@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "rm -rf tests/temp/*",
     "test": "tap tests/test-*.js",
-    "lint": "eslint -c ./.eslintrc . test --ext .js && jscs src test",
+    "lint": "eslint -c ./.eslintrc . tests --ext .js && jscs . tests",
     "package:check": "./node_modules/.bin/ncu",
     "package:upgrade": "./node_modules/.bin/ncu -u"
   },

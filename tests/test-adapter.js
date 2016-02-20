@@ -11,13 +11,17 @@ function testURL(url, callback) {
 
 test('Test starting and stopping of adapter', (t) => {
   const instance = new Adapter({
-    path: 'statuses/filter',
-    query: { track: ['javascript', 'gifs', 'funny', 'images', 'pics'], stall_warnings: true },
-    image_types: '(gif|jpg|jpeg|png)'
+    endpoint: 'statuses/filter',
+    parameters: {
+      track: ['javascript', 'gifs', 'funny', 'images', 'pics', 'node'],
+      stall_warnings: true
+    },
+    imageTypes: '(gif|jpg|jpeg|png)'
   });
   t.ok(instance, 'adapter initialized');
   instance.start();
   t.equal(instance.stopped, false, 'adapter should be running');
+
   instance.on('gif', (url, metadata) => {
     console.log('url', url); // eslint-disable-line no-console
     console.log('origin', metadata.origin); // eslint-disable-line no-console
