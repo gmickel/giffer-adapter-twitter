@@ -2,6 +2,7 @@
   "name": "giffer-adapter-twitter",
   "version": "0.9.0",
   "description": "Giffer adapter for twitter",
+  "keywords": "twitter, gifs, images, grabber, parser, giffer",
   "main": "index.js",
   "scripts": {
     "pretest": "rm -rf tests/temp/*",
