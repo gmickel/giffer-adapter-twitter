@@ -1,8 +1,8 @@
-# giffer-adapter-twitter
+# giffer-adapter-twitter - An image grabber for twitter
 
-Twitter adapter for giffer.
+Originally made to be used with the giffer download bot [Giffer](https://github.com/MaxGfeller/giffer). This adapter can also be used standalone to grab gifs from the public twitter API endpoints.
 
-## authentication
+## Authentication
 
 enter your Twitter API credentials in the `config.js` file, see `config.js.example` 
 
@@ -53,6 +53,8 @@ Stops the Giffer Adapter
 
 ## Example
 
+### Instantiating and starting
+
 ```js
   const instance = new Adapter({
     endpoint: 'statuses/filter',
@@ -63,4 +65,13 @@ Stops the Giffer Adapter
     image_types: '(gif|jpg|jpeg|png)'
   });
   instance.start();
+```
+
+### Listening to the gif event
+
+```js
+  instance.on('gif', (url, metadata) => {
+    console.log('image url', url);
+    console.log('tweet source url', metadata.origin);
+  });
 ```
