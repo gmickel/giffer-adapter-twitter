@@ -1,6 +1,6 @@
 {
   "name": "giffer-adapter-twitter",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "This can be used standalone to grab gifs from the public twitter API endpoints, also the Giffer adapter for twitter",
   "keywords": "twitter, gifs, images, grabber, parser, giffer, image grabber",
   "bugs": {
