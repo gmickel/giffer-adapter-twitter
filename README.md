@@ -39,7 +39,13 @@ Regexp String containing the images we want the Adapter to emit
 Example:
 
 ```js
-'(gif|jpg|jpeg|png)'
+'gif|jpe?g|png'
+```
+
+or
+
+```js
+'gif'
 ```
 
 ### Adapter.start()
