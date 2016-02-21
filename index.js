@@ -20,8 +20,10 @@ function Adapter(args) {
       follow: [1019188722, 15076743, 19701628, 265902729],
       stall_warnings: true
     };
-  this.imageTypes = args.imageTypes || '(gif|jpg|jpeg|png)';
-  this.re = new RegExp(`https?:\/\/.*\.${this.imageTypes}`, 'i');
+  this.imageTypes = args.imageTypes || 'gif|jpe?g|png';
+
+  // eslint-disable-next-line max-len
+  this.regexp = new RegExp(`^https?:\/\/(?:[a-z0-9\u00C0-\u017F\-]+\\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\\.(?:${this.imageTypes})(?:\\?.*)?$`, 'i'); // jscs:ignore maximumLineLength
   this.stopped = true;
   this.twitter = new TwitterStream(this.config);
 }
@@ -51,7 +53,7 @@ Adapter.prototype.start = function start() {
     if (data.entities.media && data.entities.media.length !== 0) {
       // handle images uploaded through twitter's image service
       data.entities.media.forEach((tweet) => {
-        if (tweet.media_url.match(self.re)) {
+        if (self.regexp.test(tweet.media_url)) {
           self.emit('gif', tweet.media_url, { origin: tweet.expanded_url });
         }
       });
@@ -60,7 +62,7 @@ Adapter.prototype.start = function start() {
     if (data.entities.urls && data.entities.urls.length !== 0) {
       // handle all other images
       data.entities.urls.forEach((tweet) => {
-        if (tweet.expanded_url.match(self.re)) {
+        if (self.regexp.test(tweet.expanded_url)) {
           const sourceUrl = `http://www.twitter.com/statuses/${data.id_str}`;
           self.emit('gif', tweet.expanded_url, { origin: sourceUrl });
         }
