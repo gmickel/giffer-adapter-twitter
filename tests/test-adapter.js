@@ -13,10 +13,10 @@ test('Test starting and stopping of adapter', (t) => {
   const instance = new Adapter({
     endpoint: 'statuses/filter',
     parameters: {
-      track: ['javascript', 'gifs', 'funny', 'images', 'pics', 'node'],
+      follow: ['javascript', 'gifs', 'funny', 'images', 'pics', 'node'],
       stall_warnings: true
     },
-    imageTypes: '(gif|jpg|jpeg|png)'
+    imageTypes: 'gif|jpe?g|png'
   });
   t.ok(instance, 'adapter initialized');
   instance.start();
