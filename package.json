@@ -1,8 +1,11 @@
 {
   "name": "giffer-adapter-twitter",
   "version": "0.9.1",
-  "description": "Giffer adapter for twitter",
-  "keywords": "twitter, gifs, images, grabber, parser, giffer",
+  "description": "This can be used standalone to grab gifs from the public twitter API endpoints, also the Giffer adapter for twitter",
+  "keywords": "twitter, gifs, images, grabber, parser, giffer, image grabber",
+  "bugs": {
+    "url": "https://github.com/gmickel/giffer-adapter-twitter/issues"
+  },
   "main": "index.js",
   "scripts": {
     "pretest": "rm -rf tests/temp/*",
@@ -18,10 +21,10 @@
     "twitter-stream-api": "^0.4.2"
   },
   "devDependencies": {
-    "tap": "^0.4.11",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^5.0.0",
-    "eslint-plugin-react": "^3.16.1",
+    "tap": "^5.6.0",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.0",
+    "eslint-plugin-react": "^4.0.0",
     "jscs": "^2.9.0",
     "npm-check-updates": "^2.5.6"
   }
